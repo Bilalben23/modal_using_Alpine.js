@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Modal</title>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+
+
+    <div x-data="{
+        open: false,
+        toggle() {
+            this.open = !this.open;
+        },
+        isAcceptedModal: false,
+    }" class="mt-4">
+
+        <button @click="toggle()"
+            class="mx-auto block px-5 py-2 bg-blue-700 text-white font-semibold rounded-md shadow hover:bg-blue-600">Modal</button>
+        <template x-if="isAcceptedModal">
+            <p class="flex items-center justify-center mt-5 text-green-600">Modal has been accepted <svg
+                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-6 h-6 ml-3">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                </svg>
+            </p>
+        </template>
+        <template x-teleport="body">
+            <div x-show="open"
+                class="p-3 bg-gray-300 absolute inset-0 z-10 flex flex-col items-center justify-center w-full h-full">
+                <div class="w-[500px] bg-white px-3 py-5 rounded-md" x-show="open"
+                    @click.outside="open = false, isAcceptedModal = false" x-transition>
+                    <div class="mb-3 bg-gray-100 p-2 flex items-center justify-between">
+                        <h2 class="font-bold">Modal Title</h2>
+                        <button @click="open = false, isAcceptedModal = false">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-6 h-6 cursor-pointer">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+
+                    </div>
+                    <div class="mb-4">
+                        <p>Modal content</p>
+                        <p>Modal content...</p>
+                    </div>
+                    <div class="mb-3 bg-gray-100 p-2 flex items-center justify-end gap-5">
+                        <button @click="open = false, isAcceptedModal = false"
+                            class="px-3 py-1 bg-red-500 rounded-md shadow hover:bg-red-400 transition-all">Cancel</button>
+                        <button @click="isAcceptedModal = true, open = false"
+                            class="px-3 py-1 bg-green-500 rounded-md shadow hover:bg-green-400 transition-all">Accept</button>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+
+
+
+
+</body>
+
+</html>
